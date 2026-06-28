@@ -1,0 +1,497 @@
+:root {
+  color-scheme: dark;
+  font-family: "Cormorant Garamond", "Noto Serif SC", "Songti SC", Georgia, serif;
+  background: #05050b;
+  color: #f8ecd0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+  padding: 34px 42px 28px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(145, 103, 42, .28), transparent 24%),
+    radial-gradient(circle at 22% 24%, rgba(50, 73, 143, .45), transparent 29%),
+    radial-gradient(circle at 78% 16%, rgba(107, 68, 156, .24), transparent 28%),
+    linear-gradient(135deg, #03030a 0%, #090817 48%, #020207 100%);
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .74;
+  background-image:
+    radial-gradient(circle, rgba(255, 230, 166, .92) 0 1px, transparent 1.4px),
+    radial-gradient(circle, rgba(122, 170, 255, .44) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(255, 255, 255, .65) 0 1px, transparent 1.5px);
+  background-size: 89px 89px, 137px 137px, 211px 211px;
+  animation: drift 36s linear infinite;
+}
+
+.sky::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    conic-gradient(from 20deg at 50% 50%, transparent, rgba(212, 171, 82, .08), transparent 32%),
+    radial-gradient(ellipse at center, transparent 0 38%, rgba(244, 203, 111, .1) 39%, transparent 40%);
+  filter: blur(.2px);
+}
+
+.topbar {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #caa967;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(42px, 6vw, 82px);
+  line-height: .9;
+  font-weight: 600;
+  text-shadow: 0 0 34px rgba(226, 176, 76, .34);
+}
+
+.gesture-pill,
+.shortcut-bar,
+.control-panel,
+.reading-panel {
+  border: 1px solid rgba(221, 179, 94, .32);
+  background: rgba(9, 8, 16, .48);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, .38), inset 0 0 28px rgba(241, 193, 96, .04);
+  backdrop-filter: blur(18px);
+}
+
+.gesture-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: #f4d99c;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 14px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f2c669;
+  box-shadow: 0 0 18px #f2c669;
+}
+
+.altar {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 190px);
+  padding-top: 22px;
+}
+
+.orbital-rings {
+  position: absolute;
+  width: min(72vw, 920px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(238, 196, 105, .22);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 72px rgba(238, 196, 105, .018),
+    inset 0 0 0 144px rgba(238, 196, 105, .018),
+    0 0 80px rgba(236, 188, 92, .08);
+  opacity: .86;
+}
+
+.orbital-rings::before,
+.orbital-rings::after {
+  content: "";
+  position: absolute;
+  inset: 13%;
+  border: 1px solid rgba(238, 196, 105, .2);
+  border-radius: 50%;
+  transform: rotate(18deg) scaleX(.84);
+}
+
+.orbital-rings::after {
+  inset: 25%;
+  transform: rotate(-21deg) scaleX(1.35);
+}
+
+.reading-panel {
+  position: absolute;
+  left: clamp(18px, 5vw, 72px);
+  top: 24%;
+  width: 290px;
+  min-height: 178px;
+  padding: 20px 20px 22px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity .42s ease, transform .42s ease, border-color .42s ease;
+}
+
+.reading-panel.is-revealed {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  border-color: rgba(245, 205, 125, .56);
+}
+
+.reading-panel p,
+.telemetry span {
+  margin: 0;
+  color: #a99875;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 12px;
+}
+
+.reading-panel h2 {
+  margin: 8px 0 6px;
+  color: #ffe5a3;
+  font-size: 38px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.reading-panel span {
+  display: block;
+  color: #d7b66c;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 14px;
+}
+
+.reading-panel strong {
+  display: block;
+  margin-top: 16px;
+  color: #f4dfb3;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.75;
+}
+
+.deck-stage {
+  position: relative;
+  width: min(1220px, 82vw);
+  height: 560px;
+  perspective: 1500px;
+  touch-action: none;
+  transform-style: preserve-3d;
+}
+
+.deck-stage.is-dragging .tarot-card {
+  transition-duration: .08s;
+}
+
+.tarot-card {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  z-index: var(--z);
+  width: clamp(218px, 13.2vw, 272px);
+  aspect-ratio: 2 / 3;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  opacity: var(--opacity);
+  cursor: pointer;
+  background: transparent;
+  transform:
+    translate(-50%, -50%)
+    translateX(var(--x))
+    translateY(var(--y))
+    rotateY(var(--tilt))
+    rotate(var(--rot))
+    scale(var(--scale));
+  transition: transform .55s cubic-bezier(.2, .85, .18, 1), opacity .4s ease, filter .4s ease;
+  filter: saturate(.7) brightness(.75);
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.tarot-card.is-active {
+  filter: saturate(1.08) brightness(1);
+}
+
+.card-aura {
+  position: absolute;
+  inset: -30px;
+  border-radius: 28px;
+  opacity: .18;
+  background:
+    radial-gradient(ellipse at center, rgba(var(--glow), .7), rgba(var(--glow), .22) 34%, transparent 68%);
+  filter: blur(16px);
+  transform: translateZ(-1px);
+  transition: opacity .4s ease, transform .55s cubic-bezier(.2, .85, .18, 1);
+}
+
+.tarot-card.is-active .card-aura {
+  opacity: .72;
+  transform: translateZ(-1px) scale(1.08);
+}
+
+.tarot-card.is-active .card-inner {
+  box-shadow:
+    0 0 0 1px rgba(248, 213, 136, .65),
+    0 0 42px rgba(var(--glow), .48),
+    0 0 82px rgba(var(--glow), .24),
+    0 26px 76px rgba(0, 0, 0, .58);
+}
+
+.tarot-card.is-selected .card-inner {
+  transform: rotateY(180deg) translateY(-42px) scale(1.05);
+}
+
+.card-inner,
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+}
+
+.card-inner {
+  transform-style: preserve-3d;
+  transition: transform .72s cubic-bezier(.2, .78, .18, 1);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, .46);
+}
+
+.card-face {
+  overflow: hidden;
+  backface-visibility: hidden;
+  border: 1px solid rgba(245, 202, 107, .58);
+}
+
+.card-back {
+  background: url("/assets/card-back.png") center / cover;
+}
+
+.card-front {
+  display: flex;
+  align-items: flex-end;
+  transform: rotateY(180deg);
+  background: #090812;
+}
+
+.card-art {
+  position: absolute;
+  inset: 0;
+  background-image: var(--card-image);
+  background-size: cover;
+  background-position: center;
+  filter: contrast(1.04) saturate(1.08);
+}
+
+.card-copy {
+  position: relative;
+  display: grid;
+  width: 100%;
+  gap: 4px;
+  padding: 78px 14px 16px;
+  background: linear-gradient(to top, rgba(3, 3, 9, .94), rgba(3, 3, 9, .74) 58%, transparent);
+  text-align: center;
+}
+
+.card-copy strong {
+  color: #ffeab1;
+  font-size: clamp(26px, 1.9vw, 34px);
+  line-height: 1;
+  font-weight: 600;
+}
+
+.card-copy em {
+  color: #d6b060;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-style: normal;
+}
+
+.instruction {
+  position: absolute;
+  bottom: 16px;
+  max-width: min(720px, 72vw);
+  color: #eed59a;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 16px;
+  text-align: center;
+  text-shadow: 0 0 22px rgba(240, 192, 91, .45);
+}
+
+.control-panel {
+  position: absolute;
+  z-index: 4;
+  right: 32px;
+  bottom: 74px;
+  width: 260px;
+  padding: 14px;
+  border-radius: 8px;
+}
+
+#cameraPreview,
+#handCanvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  border-radius: 6px;
+  object-fit: cover;
+  background: rgba(2, 2, 7, .88);
+}
+
+#handCanvas {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: calc(100% - 28px);
+  pointer-events: none;
+  transform: scaleX(-1);
+}
+
+.telemetry {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.telemetry div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.telemetry strong {
+  overflow: hidden;
+  color: #f8d47d;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.actions button {
+  min-height: 38px;
+  border: 1px solid rgba(236, 194, 104, .34);
+  border-radius: 6px;
+  color: #f7ddb0;
+  background: rgba(246, 199, 104, .08);
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background: rgba(246, 199, 104, .16);
+}
+
+.shortcut-bar {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: 24px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  max-width: calc(100vw - 84px);
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  color: #c9b78b;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  transform: translateX(-50%);
+}
+
+@keyframes drift {
+  from { background-position: 0 0, 0 0, 0 0; }
+  to { background-position: 89px 178px, -137px 137px, 211px -211px; }
+}
+
+@media (max-width: 960px) {
+  body {
+    overflow: auto;
+  }
+
+  .app-shell {
+    min-height: 100svh;
+    padding: 24px 18px 190px;
+  }
+
+  .topbar {
+    align-items: center;
+  }
+
+  .gesture-pill {
+    font-size: 12px;
+  }
+
+  .altar {
+    min-height: 570px;
+  }
+
+  .reading-panel {
+    left: 18px;
+    top: auto;
+    bottom: 72px;
+    width: min(310px, calc(100vw - 36px));
+  }
+
+  .deck-stage {
+    width: 100vw;
+    height: 430px;
+  }
+
+  .tarot-card {
+    width: clamp(168px, 46vw, 214px);
+  }
+
+  .control-panel {
+    right: 18px;
+    bottom: 64px;
+    width: min(245px, calc(100vw - 36px));
+  }
+
+  .shortcut-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: calc(100vw - 36px);
+    border-radius: 8px;
+    text-align: center;
+  }
+}
