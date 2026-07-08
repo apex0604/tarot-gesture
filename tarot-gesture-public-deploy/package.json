@@ -1,0 +1,14 @@
+{
+  "name": "tarot-gesture-public",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "start:local": "node server.mjs",
+    "health": "node -e \"fetch('http://127.0.0.1:' + (process.env.PORT || 5173) + '/healthz').then(r => r.json()).then(console.log)\""
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

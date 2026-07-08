@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tarot Image Compression Compare</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, "Noto Sans SC", system-ui, sans-serif;
+      background: #090812;
+      color: #f7e6bc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(187, 144, 65, .18), transparent 28%),
+        linear-gradient(135deg, #090812, #05050a);
+    }
+
+    main {
+      display: grid;
+      gap: 16px;
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 650;
+    }
+
+    .summary {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      color: #d9c18b;
+      font-size: 13px;
+    }
+
+    .summary span,
+    select {
+      border: 1px solid rgba(238, 196, 105, .26);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .06);
+      padding: 8px 10px;
+    }
+
+    select {
+      color: #ffe7a8;
+      outline: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    figure {
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    figcaption {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      color: #d9c18b;
+      font-size: 13px;
+    }
+
+    figcaption strong {
+      color: #ffe7a8;
+      font-size: 15px;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      max-height: 78vh;
+      object-fit: contain;
+      border: 1px solid rgba(238, 196, 105, .22);
+      border-radius: 8px;
+      background: #05050a;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 12px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      img {
+        max-height: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>Tarot 图片压缩对比</h1>
+        <div class="summary">
+          <span>原 PNG: 67.62 MB</span>
+          <span>JPEG q88: 11.76 MB</span>
+          <span>JPEG 768 q86: 6.39 MB</span>
+        </div>
+      </div>
+      <label>
+        <select id="cardSelect" aria-label="选择牌面"></select>
+      </label>
+    </header>
+
+    <section class="grid">
+      <figure>
+        <figcaption><strong>原图 PNG</strong><span id="originalSize"></span></figcaption>
+        <img id="originalImage" alt="">
+      </figure>
+      <figure>
+        <figcaption><strong>JPEG q88 1024px</strong><span id="fullSize"></span></figcaption>
+        <img id="fullImage" alt="">
+      </figure>
+      <figure>
+        <figcaption><strong>JPEG q86 768px</strong><span id="smallSize"></span></figcaption>
+        <img id="smallImage" alt="">
+      </figure>
+    </section>
+  </main>
+
+  <script>
+    const cards = [
+      ["tarot-chariot", 3416117, 588356, 322717],
+      ["tarot-death", 3037693, 547127, 300261],
+      ["tarot-devil", 3521702, 431621, 253862],
+      ["tarot-emperor", 3285422, 597969, 322542],
+      ["tarot-empress", 2987157, 551237, 298720],
+      ["tarot-fool", 3369776, 586382, 322195],
+      ["tarot-hanged-man", 3112414, 588497, 316975],
+      ["tarot-hermit", 3025315, 483788, 257064],
+      ["tarot-hierophant", 2942702, 547934, 301594],
+      ["tarot-high-priestess", 3089993, 539646, 283707],
+      ["tarot-judgement", 3135474, 566704, 300473],
+      ["tarot-justice", 3475766, 613937, 327106],
+      ["tarot-lovers", 3304069, 577039, 310283],
+      ["tarot-magician", 2978179, 497686, 270368],
+      ["tarot-moon", 3059699, 556699, 302979],
+      ["tarot-star", 3073504, 550301, 297933],
+      ["tarot-strength", 3287195, 569626, 305381],
+      ["tarot-sun", 3359363, 640095, 350232],
+      ["tarot-temperance", 2893823, 524704, 289314],
+      ["tarot-tower", 3838430, 495603, 285827],
+      ["tarot-wheel-of-fortune", 3636967, 693493, 368397],
+      ["tarot-world", 3076920, 580710, 315375],
+    ];
+
+    const select = document.querySelector("#cardSelect");
+    const originalImage = document.querySelector("#originalImage");
+    const fullImage = document.querySelector("#fullImage");
+    const smallImage = document.querySelector("#smallImage");
+    const originalSize = document.querySelector("#originalSize");
+    const fullSize = document.querySelector("#fullSize");
+    const smallSize = document.querySelector("#smallSize");
+
+    function formatSize(bytes) {
+      return `${(bytes / 1024).toFixed(0)} KB`;
+    }
+
+    function titleFromName(name) {
+      return name.replace(/^tarot-/, "").replace(/-/g, " ");
+    }
+
+    cards.forEach(([name]) => {
+      const option = document.createElement("option");
+      option.value = name;
+      option.textContent = titleFromName(name);
+      select.append(option);
+    });
+
+    function render() {
+      const card = cards.find(([name]) => name === select.value) || cards[0];
+      const [name, originalBytes, fullBytes, smallBytes] = card;
+      originalImage.src = `public/assets/tarot-hd/${name}.png`;
+      fullImage.src = `public/assets/tarot-jpg-q88/${name}.jpg`;
+      smallImage.src = `public/assets/tarot-jpg-768-q86/${name}.jpg`;
+      originalImage.alt = `${titleFromName(name)} 原图`;
+      fullImage.alt = `${titleFromName(name)} JPEG q88`;
+      smallImage.alt = `${titleFromName(name)} JPEG 768 q86`;
+      originalSize.textContent = formatSize(originalBytes);
+      fullSize.textContent = formatSize(fullBytes);
+      smallSize.textContent = formatSize(smallBytes);
+    }
+
+    select.addEventListener("change", render);
+    select.value = "tarot-tower";
+    render();
+  </script>
+</body>
+</html>

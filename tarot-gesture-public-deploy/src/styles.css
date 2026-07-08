@@ -1,0 +1,1234 @@
+:root {
+  color-scheme: dark;
+  font-family: "Cormorant Garamond", "Noto Serif SC", "Songti SC", Georgia, serif;
+  background: #05050b;
+  color: #f8ecd0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+  padding: clamp(18px, 2.4vh, 34px) 42px 72px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(145, 103, 42, .28), transparent 24%),
+    radial-gradient(circle at 22% 24%, rgba(50, 73, 143, .45), transparent 29%),
+    radial-gradient(circle at 78% 16%, rgba(107, 68, 156, .24), transparent 28%),
+    linear-gradient(135deg, #03030a 0%, #090817 48%, #020207 100%);
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .74;
+  background-image:
+    radial-gradient(circle, rgba(255, 230, 166, .92) 0 1px, transparent 1.4px),
+    radial-gradient(circle, rgba(122, 170, 255, .44) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(255, 255, 255, .65) 0 1px, transparent 1.5px);
+  background-size: 89px 89px, 137px 137px, 211px 211px;
+  animation: drift 36s linear infinite;
+}
+
+.sky::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    conic-gradient(from 20deg at 50% 50%, transparent, rgba(212, 171, 82, .08), transparent 32%),
+    radial-gradient(ellipse at center, transparent 0 38%, rgba(244, 203, 111, .1) 39%, transparent 40%);
+  filter: blur(.2px);
+}
+
+.topbar {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #caa967;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(38px, 5vw, 72px);
+  line-height: .9;
+  font-weight: 600;
+  text-shadow: 0 0 34px rgba(226, 176, 76, .34);
+}
+
+.gesture-pill,
+.intro-trigger,
+.intro-panel,
+.shortcut-bar,
+.control-panel,
+.reading-panel,
+.question-panel,
+.flow-guide,
+.spread-panel {
+  border: 1px solid rgba(221, 179, 94, .32);
+  background: rgba(9, 8, 16, .48);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, .38), inset 0 0 28px rgba(241, 193, 96, .04);
+  backdrop-filter: blur(18px);
+}
+
+.gesture-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: #f4d99c;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 14px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f2c669;
+  box-shadow: 0 0 18px #f2c669;
+}
+
+.question-panel {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  gap: 10px;
+  width: min(560px, calc(100vw - 84px));
+  margin-top: clamp(12px, 1.8vh, 22px);
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.question-panel label,
+.question-panel p {
+  margin: 0;
+  color: #a99875;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 12px;
+}
+
+.question-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.question-row input {
+  min-width: 0;
+  min-height: 42px;
+  border: 1px solid rgba(236, 194, 104, .32);
+  border-radius: 6px;
+  padding: 0 12px;
+  color: #f8ecd0;
+  background: rgba(2, 2, 7, .58);
+  outline: none;
+  font: 14px Inter, "Noto Sans SC", sans-serif;
+}
+
+.question-row input:focus {
+  border-color: rgba(245, 205, 125, .72);
+  box-shadow: 0 0 0 3px rgba(245, 205, 125, .12);
+}
+
+.question-row input::placeholder {
+  color: #7f735c;
+}
+
+.question-row button {
+  min-height: 42px;
+  border: 1px solid rgba(236, 194, 104, .46);
+  border-radius: 6px;
+  padding: 0 14px;
+  color: #1a1307;
+  background: #f2c669;
+  cursor: pointer;
+  font: 600 14px Inter, "Noto Sans SC", sans-serif;
+}
+
+.question-row button:hover {
+  background: #ffd982;
+}
+
+.flow-guide {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  width: min(680px, calc(100vw - 84px));
+  margin-top: 10px;
+  padding: 7px;
+  border-radius: 8px;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+}
+
+.flow-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 34px;
+  padding: 0 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #9f9071;
+  background: rgba(2, 2, 7, .22);
+  transition: border-color .24s ease, background .24s ease, color .24s ease;
+}
+
+.flow-step b {
+  display: grid;
+  place-items: center;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: #211606;
+  background: #7f735c;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.flow-step span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.flow-step.is-complete {
+  color: #d8c59d;
+}
+
+.flow-step.is-complete b {
+  background: #caa967;
+}
+
+.flow-step.is-active {
+  border-color: rgba(245, 205, 125, .62);
+  color: #ffe5a3;
+  background: rgba(246, 199, 104, .12);
+}
+
+.flow-step.is-active b {
+  background: #f2c669;
+  box-shadow: 0 0 18px rgba(242, 198, 105, .45);
+}
+
+.spread-panel {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  width: min(560px, calc(100vw - 84px));
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.spread-option {
+  display: grid;
+  gap: 4px;
+  min-height: 44px;
+  border: 1px solid rgba(236, 194, 104, .22);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #d7c08c;
+  background: rgba(2, 2, 7, .32);
+  cursor: pointer;
+  text-align: left;
+}
+
+.spread-option:hover,
+.spread-option.is-active {
+  border-color: rgba(245, 205, 125, .68);
+  background: rgba(246, 199, 104, .12);
+}
+
+.spread-option strong {
+  color: #ffe5a3;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.spread-option span {
+  overflow: hidden;
+  color: #a99875;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.altar {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  min-height: clamp(430px, calc(100vh - 330px), 620px);
+  padding-top: 0;
+  transform: translateY(clamp(-86px, -8vh, -48px));
+}
+
+.orbital-rings {
+  position: absolute;
+  width: min(72vw, 920px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(238, 196, 105, .22);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 72px rgba(238, 196, 105, .018),
+    inset 0 0 0 144px rgba(238, 196, 105, .018),
+    0 0 80px rgba(236, 188, 92, .08);
+  opacity: .86;
+}
+
+.orbital-rings::before,
+.orbital-rings::after {
+  content: "";
+  position: absolute;
+  inset: 13%;
+  border: 1px solid rgba(238, 196, 105, .2);
+  border-radius: 50%;
+  transform: rotate(18deg) scaleX(.84);
+}
+
+.orbital-rings::after {
+  inset: 25%;
+  transform: rotate(-21deg) scaleX(1.35);
+}
+
+.reading-panel {
+  position: absolute;
+  z-index: 8;
+  left: clamp(18px, 5vw, 72px);
+  top: clamp(90px, 5vh, 22px);
+  bottom: clamp(46px, 5vh, 62px);
+  width: clamp(360px, 23vw, 420px);
+  height: auto;
+  padding: 18px 20px 20px;
+  border-radius: 8px;
+  background: rgba(9, 8, 16, .76);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 205, 125, .42) transparent;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity .42s ease, transform .42s ease, border-color .42s ease;
+}
+
+.reading-panel.is-revealed {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  border-color: rgba(245, 205, 125, .56);
+}
+
+.reading-panel p,
+.telemetry span {
+  margin: 0;
+  color: #a99875;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 12px;
+}
+
+.reading-panel h2 {
+  margin: 7px 0 5px;
+  color: #ffe5a3;
+  font-size: 32px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.reading-panel span {
+  display: block;
+  color: #d7b66c;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 12px;
+}
+
+.reading-panel .active-question {
+  margin-top: 8px;
+  color: #f1cf86;
+  line-height: 1.45;
+}
+
+.reading-panel strong {
+  display: block;
+  margin-top: 14px;
+  color: #f4dfb3;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.65;
+}
+
+.spread-result {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.spread-result:empty {
+  display: none;
+}
+
+.spread-result article {
+  display: grid;
+  gap: 4px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(245, 205, 125, .18);
+}
+
+.spread-result article span {
+  color: #f1cf86;
+  font-size: 12px;
+}
+
+.spread-result article strong {
+  margin: 0;
+  color: #ffe5a3;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.spread-result article p {
+  margin: 0;
+  color: #d8c59d;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.ai-reading {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(245, 205, 125, .24);
+}
+
+.ai-reading[hidden] {
+  display: none;
+}
+
+.ai-reading span {
+  color: #f1cf86;
+  font-size: 12px;
+}
+
+.ai-reading p {
+  margin: 0;
+  color: #f8ecd0;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.deck-stage {
+  position: relative;
+  width: min(1480px, 90vw);
+  height: clamp(460px, calc(100vh - 300px), 680px);
+  perspective: 1500px;
+  touch-action: none;
+  transform-style: preserve-3d;
+  user-select: none;
+  overflow: visible;
+  contain: layout;
+}
+
+.deck-stage.is-ritual {
+  display: grid;
+  place-items: center;
+  touch-action: auto;
+}
+
+.ritual-table {
+  position: relative;
+  width: clamp(420px, min(60vw, 68vh), 760px);
+  aspect-ratio: 1;
+  isolation: isolate;
+}
+
+.ritual-table::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 24% 20%, rgba(255, 196, 88, .28), transparent 22%),
+    radial-gradient(circle at 77% 20%, rgba(255, 196, 88, .28), transparent 22%),
+    radial-gradient(circle at 20% 78%, rgba(255, 196, 88, .22), transparent 22%),
+    radial-gradient(circle at 80% 78%, rgba(255, 196, 88, .22), transparent 22%),
+    radial-gradient(circle at center, rgba(130, 113, 202, .14), transparent 62%);
+  filter: blur(14px);
+  opacity: .88;
+  z-index: -1;
+}
+
+.ritual-table img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  filter: none;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.deck-stage.is-dragging .tarot-card {
+  transition-duration: .08s;
+}
+
+.tarot-card {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  z-index: var(--z);
+  width: clamp(220px, min(18vw, 38vh), 340px);
+  aspect-ratio: 2 / 3;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  opacity: var(--opacity);
+  cursor: pointer;
+  background: transparent;
+  transform:
+    translate(-50%, -50%)
+    translateX(var(--x))
+    translateY(var(--y))
+    rotateY(var(--tilt))
+    rotate(var(--rot))
+    scale(var(--scale));
+  transition: transform .55s cubic-bezier(.2, .85, .18, 1), opacity .4s ease, filter .4s ease;
+  filter: saturate(.7) brightness(.75);
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.tarot-card.is-active {
+  filter: saturate(1.08) brightness(1);
+}
+
+.card-aura {
+  position: absolute;
+  inset: -30px;
+  border-radius: 28px;
+  opacity: .18;
+  background:
+    radial-gradient(ellipse at center, rgba(var(--glow), .7), rgba(var(--glow), .22) 34%, transparent 68%);
+  filter: blur(16px);
+  transform: translateZ(-1px);
+  transition: opacity .4s ease, transform .55s cubic-bezier(.2, .85, .18, 1);
+}
+
+.tarot-card.is-active .card-aura {
+  opacity: .72;
+  transform: translateZ(-1px) scale(1.08);
+}
+
+.tarot-card.is-active .card-inner {
+  box-shadow:
+    0 0 0 1px rgba(248, 213, 136, .65),
+    0 0 42px rgba(var(--glow), .48),
+    0 0 82px rgba(var(--glow), .24),
+    0 26px 76px rgba(0, 0, 0, .58);
+}
+
+.tarot-card.is-selected .card-inner {
+  transform: rotateY(180deg) translateY(-52px) scale(1.22);
+}
+
+.card-inner,
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+}
+
+.card-inner {
+  transform-style: preserve-3d;
+  transition: transform .72s cubic-bezier(.2, .78, .18, 1);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, .46);
+}
+
+.card-face {
+  overflow: hidden;
+  backface-visibility: hidden;
+  border: 1px solid rgba(245, 202, 107, .58);
+}
+
+.card-back {
+  background: url("/assets/card-back.png") center / cover;
+}
+
+.card-front {
+  display: flex;
+  align-items: flex-end;
+  transform: rotateY(180deg);
+  background: #090812;
+}
+
+.card-art {
+  position: absolute;
+  inset: 0;
+  background-image: var(--card-image);
+  background-size: cover;
+  background-position: center;
+  filter: contrast(1.04) saturate(1.08);
+}
+
+.card-copy {
+  position: relative;
+  display: grid;
+  width: 100%;
+  gap: 4px;
+  padding: 78px 14px 16px;
+  background: linear-gradient(to top, rgba(3, 3, 9, .94), rgba(3, 3, 9, .74) 58%, transparent);
+  text-align: center;
+}
+
+.card-copy strong {
+  color: #ffeab1;
+  font-size: clamp(26px, 1.9vw, 34px);
+  line-height: 1;
+  font-weight: 600;
+}
+
+.card-copy em {
+  color: #d6b060;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-style: normal;
+}
+
+.instruction {
+  position: fixed;
+  left: 50%;
+  bottom: 78px;
+  z-index: 11;
+  max-width: min(720px, 72vw);
+  color: #eed59a;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 16px;
+  text-align: center;
+  text-shadow: 0 0 22px rgba(240, 192, 91, .45);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.control-panel {
+  position: fixed;
+  z-index: 10;
+  right: 32px;
+  bottom: 92px;
+  width: 260px;
+  padding: 14px;
+  border-radius: 8px;
+}
+
+#cameraPreview,
+#handCanvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  border-radius: 6px;
+  object-fit: cover;
+  background: rgba(2, 2, 7, .88);
+}
+
+#handCanvas {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: calc(100% - 28px);
+  pointer-events: none;
+  transform: scaleX(-1);
+}
+
+.telemetry {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.telemetry div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.telemetry strong {
+  overflow: hidden;
+  color: #f8d47d;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.actions button {
+  min-height: 38px;
+  border: 1px solid rgba(236, 194, 104, .34);
+  border-radius: 6px;
+  color: #f7ddb0;
+  background: rgba(246, 199, 104, .08);
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background: rgba(246, 199, 104, .16);
+}
+
+.shortcut-bar {
+  position: fixed;
+  z-index: 12;
+  left: 50%;
+  bottom: 16px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  max-width: calc(100vw - 84px);
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  color: #c9b78b;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  transform: translateX(-50%);
+}
+
+@keyframes drift {
+  from { background-position: 0 0, 0 0, 0 0; }
+  to { background-position: 89px 178px, -137px 137px, 211px -211px; }
+}
+
+@media (max-height: 820px) and (min-width: 961px) {
+  .app-shell {
+    padding-top: 16px;
+  }
+
+  h1 {
+    font-size: clamp(34px, 4.4vw, 58px);
+  }
+
+  .question-panel {
+    margin-top: 10px;
+    padding: 10px;
+  }
+
+  .flow-guide {
+    padding: 6px;
+  }
+
+  .question-row input,
+  .question-row button {
+    min-height: 36px;
+  }
+
+  .spread-option {
+    min-height: 40px;
+    padding: 7px 9px;
+  }
+
+  .altar {
+    min-height: clamp(380px, calc(100vh - 285px), 500px);
+    transform: translateY(clamp(-78px, -8vh, -42px));
+  }
+
+  .deck-stage {
+    height: clamp(420px, calc(100vh - 260px), 580px);
+  }
+
+  .tarot-card {
+    width: clamp(200px, min(16vw, 36vh), 300px);
+    top: 48%;
+  }
+
+  .reading-panel {
+    top: clamp(8px, 1.6vh, 18px);
+    bottom: 48px;
+    width: clamp(350px, 26vw, 400px);
+    height: auto;
+  }
+
+  .instruction {
+    bottom: 72px;
+  }
+
+  .control-panel {
+    bottom: 86px;
+  }
+}
+
+@media (max-width: 960px) {
+  :root {
+    --mobile-gap: clamp(8px, 1.4vh, 12px);
+  }
+
+  body {
+    overflow: auto;
+  }
+
+  .app-shell {
+    min-height: 100svh;
+    padding: 10px 12px 18px;
+    overflow-x: hidden;
+  }
+
+  .topbar {
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    font-size: clamp(30px, 10vw, 44px);
+  }
+
+  .eyebrow {
+    margin-bottom: 3px;
+    font-size: 11px;
+  }
+
+  .question-panel {
+    width: calc(100vw - 24px);
+    margin-top: var(--mobile-gap);
+    padding: 9px;
+  }
+
+  .flow-guide {
+    grid-template-columns: 1fr 1fr;
+    width: calc(100vw - 24px);
+    margin-top: var(--mobile-gap);
+    padding: 5px;
+  }
+
+  .flow-step {
+    min-height: 30px;
+    padding: 0 7px;
+  }
+
+  .spread-panel {
+    grid-template-columns: 1fr 1fr;
+    width: calc(100vw - 24px);
+    gap: 5px;
+    margin-top: var(--mobile-gap);
+    padding: 5px;
+  }
+
+  .question-row {
+    grid-template-columns: 1fr;
+  }
+
+  .question-row input,
+  .question-row button {
+    min-height: 38px;
+  }
+
+  .gesture-pill {
+    flex: 0 0 auto;
+    min-height: 32px;
+    padding: 0 9px;
+    font-size: 12px;
+  }
+
+  .intro-wrap {
+    margin-left: auto;
+  }
+
+  .intro-trigger {
+    min-height: 32px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .intro-panel {
+    position: fixed;
+    top: 64px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-height: min(58svh, 420px);
+    overflow-y: auto;
+    padding: 14px;
+  }
+
+  .altar {
+    align-content: start;
+    min-height: min(58svh, 430px);
+    margin-top: var(--mobile-gap);
+    transform: none;
+  }
+
+  .orbital-rings {
+    width: min(118vw, 520px);
+    opacity: .54;
+  }
+
+  .reading-panel {
+    position: relative;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    order: 2;
+    width: calc(100vw - 24px);
+    height: auto;
+    max-height: 34svh;
+    min-height: 0;
+    padding: 12px 14px;
+    margin-top: 8px;
+  }
+
+  .reading-panel h2 {
+    font-size: 23px;
+  }
+
+  .reading-panel strong,
+  .ai-reading p {
+    line-height: 1.55;
+  }
+
+  .deck-stage {
+    width: calc(100vw - 24px);
+    height: min(45svh, 360px);
+    min-height: 292px;
+    overflow: visible;
+  }
+
+  .ritual-table {
+    width: min(74vw, 320px);
+  }
+
+  .tarot-card {
+    width: clamp(138px, min(42vw, 25svh), 196px);
+    border-radius: 10px;
+    top: 48%;
+  }
+
+  .deck-stage.is-dragging .tarot-card {
+    transition-duration: 0s;
+  }
+
+  .tarot-card.is-selected .card-inner {
+    transform: rotateY(180deg) translateY(-24px) scale(1.08);
+  }
+
+  .card-inner,
+  .card-face {
+    border-radius: 10px;
+  }
+
+  .card-copy {
+    padding: 54px 10px 12px;
+  }
+
+  .card-copy strong {
+    font-size: clamp(20px, 6vw, 28px);
+  }
+
+  .control-panel {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px 10px;
+    width: calc(100vw - 24px);
+    margin-top: 8px;
+    padding: 9px;
+  }
+
+  #cameraPreview,
+  #handCanvas {
+    display: none;
+  }
+
+  .telemetry {
+    grid-column: 1 / 2;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 0;
+  }
+
+  .actions {
+    grid-column: 2 / 3;
+    grid-template-columns: 1fr;
+    min-width: 112px;
+  }
+
+  .actions button {
+    min-height: 34px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .shortcut-bar {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 8px;
+    width: calc(100vw - 24px);
+    min-height: 38px;
+    max-width: none;
+    margin-top: 8px;
+    padding: 0 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 12px;
+    transform: none;
+  }
+
+  .shortcut-bar span:last-child {
+    display: none;
+  }
+
+  .instruction {
+    position: absolute;
+    left: 50%;
+    bottom: 4px;
+    width: calc(100vw - 24px);
+    max-width: none;
+    font-size: 12px;
+  }
+}
+
+.intro-wrap {
+  position: relative;
+  z-index: 20;
+  margin-left: auto;
+}
+
+.intro-trigger {
+  min-height: 42px;
+  border-radius: 999px;
+  padding: 0 16px;
+  color: #f4d99c;
+  cursor: pointer;
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  font-size: 14px;
+}
+
+.intro-trigger:hover,
+.intro-trigger[aria-expanded="true"] {
+  border-color: rgba(245, 205, 125, .68);
+  background: rgba(246, 199, 104, .12);
+}
+
+.intro-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 1000;
+  width: min(360px, calc(100vw - 32px));
+  padding: 16px;
+  border-radius: 8px;
+  color: #f4dfb3;
+  background: rgba(9, 8, 16, .94);
+  font-family: Inter, "Noto Sans SC", sans-serif;
+  line-height: 1.65;
+}
+
+.intro-panel[hidden] {
+  display: none;
+}
+
+.intro-panel h2 {
+  margin: 0 0 8px;
+  color: #ffe5a3;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.intro-panel p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.intro-panel p + p {
+  margin-top: 10px;
+}
+
+@media (min-width: 961px) {
+  .topbar {
+    padding-right: 132px;
+  }
+
+  .topbar > .intro-wrap {
+    position: fixed;
+    top: clamp(18px, 2.4vh, 34px);
+    right: 42px;
+    z-index: 50;
+  }
+
+  .intro-panel {
+    z-index: 51;
+  }
+}
+
+@media (max-width: 960px) {
+  .intro-wrap {
+    margin-left: auto;
+  }
+
+  .intro-trigger {
+    min-height: 32px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .intro-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+    width: auto;
+    max-height: min(72svh, 560px);
+    overflow-y: auto;
+    padding: calc(18px + env(safe-area-inset-top)) 18px 18px;
+    border-width: 0 0 1px;
+    border-radius: 0 0 8px 8px;
+    background: rgba(9, 8, 16, .98);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, .72), inset 0 0 28px rgba(241, 193, 96, .04);
+  }
+
+  .intro-panel h2 {
+    font-size: 21px;
+  }
+
+  .intro-panel p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 430px) {
+  .topbar {
+    align-items: flex-start;
+  }
+
+  .gesture-pill {
+    max-width: 112px;
+  }
+
+  .flow-step span,
+  .spread-option span {
+    white-space: normal;
+  }
+
+  .spread-option {
+    min-height: 44px;
+    padding: 7px 8px;
+  }
+
+  .altar {
+    min-height: min(54svh, 390px);
+  }
+
+  .deck-stage {
+    height: min(42svh, 320px);
+    min-height: 270px;
+  }
+
+  .ritual-table {
+    width: min(72vw, 280px);
+  }
+
+  .tarot-card {
+    width: clamp(126px, min(39vw, 23svh), 168px);
+    top: 47%;
+  }
+
+  .reading-panel {
+    max-height: 30svh;
+  }
+
+  .control-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .telemetry,
+  .actions {
+    grid-column: auto;
+  }
+
+  .actions {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* The intro panel is moved to <body> by JS so it can sit above every app layer. */
+body > .intro-panel {
+  position: fixed;
+  top: clamp(18px, 2.4vh, 34px);
+  right: 42px;
+  left: auto;
+  z-index: 10000;
+}
+
+@media (max-width: 960px) {
+  body > .intro-panel {
+    top: 0;
+    right: 0;
+    left: 0;
+    width: auto;
+    max-height: min(78svh, 580px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: calc(18px + env(safe-area-inset-top)) 18px 18px;
+    border-width: 0 0 1px;
+    border-radius: 0 0 8px 8px;
+    background: rgba(9, 8, 16, .99);
+    box-shadow: 0 24px 90px rgba(0, 0, 0, .78), inset 0 0 28px rgba(241, 193, 96, .04);
+  }
+}
